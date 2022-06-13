@@ -1,6 +1,8 @@
 # --- PACKAGES ---
+
+#install.packages("igraph")
 library('igraph')
-install.packages("scales")
+#install.packages("scales")
 library("scales")
 
 #--- 1 DATASET LOAD ---
@@ -12,9 +14,19 @@ head(df)
 columns = c('Source','Target','weight')
 df = df[columns]
 head(df,10)
+View(df)
+
+# checking for Null
+View(as.data.frame(table(df$Source)))
+View(as.data.frame(table(df$Target)))
+
+# dropping rows with Nan either in source or target columns
+df2 = df[!(df$Source=="Nan" | df$Target=="Nan"),]
+nrow(df)
+nrow(df2) #removing 8 rows in total
 
 # graph creation
-g = graph_from_data_frame(df, directed = TRUE)
+g = graph_from_data_frame(df2, directed = TRUE)
 
 #--- 2 NETWORK PROPERTIES ---
 
@@ -40,6 +52,8 @@ deg_weighted = strength(g, mode = "all", weights = df$weight)
 deg_ranked_weighted = sort(rank(deg_weighted), decreasing = TRUE)
 head(deg_ranked_weighted, 10)
 
+deg_ranked_weighted$[1:10]
+
 #--- 3 SUBGRAPH ---
 
 # plotting the graph
@@ -63,22 +77,17 @@ edge_density(g)
 # density of sub-graph
 edge_density(sg)
 
-# comments
-
 # --- CENTRALITY ---
 
 # closeness centrality
-g_closeness = closeness(g)
+g_closeness = closeness(g, mode='all')
 closeness_centrality = sort(rank(g_closeness), decreasing = TRUE)
 head(closeness_centrality, 15)
 
 # betweeness centrality
-g_betweenness = betweenness(g)
+g_betweenness = betweenness(g, mode='all')
 betweeness_centrality = sort(rank(g_betweenness), decreasing = TRUE)
 head(betweeness_centrality, 15)
-
-# John snow position
-
 
 # --- PAGRE RANK ---
 
