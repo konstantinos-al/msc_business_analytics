@@ -44,15 +44,13 @@ sum(count_triangles(g, vids=V(g)))
 
 # the top-10 characters of the network as far as their degree is concerned
 deg = degree(g, mode = 'all')
-deg_ranked = sort(rank(deg), decreasing = TRUE)
+deg_ranked = sort(deg, decreasing = TRUE)
 head(deg_ranked, 10)
 
 # the top-10 characters of the network as far as their weighted degree is concerned
-deg_weighted = strength(g, mode = "all", weights = df$weight)
-deg_ranked_weighted = sort(rank(deg_weighted), decreasing = TRUE)
+deg_weighted = strength(g, mode = "all", weights = df2$weight)
+deg_ranked_weighted = sort(deg_weighted, decreasing = TRUE)
 head(deg_ranked_weighted, 10)
-
-deg_ranked_weighted$[1:10]
 
 #--- 3 SUBGRAPH ---
 
@@ -81,17 +79,17 @@ edge_density(sg)
 
 # closeness centrality
 g_closeness = closeness(g, mode='all')
-closeness_centrality = sort(rank(g_closeness), decreasing = TRUE)
-head(closeness_centrality, 15)
+closeness_centrality = sort(g_closeness, decreasing = TRUE)
+head(round(closeness_centrality,7), 15)
 
 # betweeness centrality
-g_betweenness = betweenness(g, mode='all')
-betweeness_centrality = sort(rank(g_betweenness), decreasing = TRUE)
+g_betweenness = betweenness(g)
+betweeness_centrality = sort(g_betweenness, decreasing = TRUE)
 head(betweeness_centrality, 15)
 
-# --- PAGRE RANK ---
+# --- PAGE RANK ---
 
-# page rank algortithm
+# page rank algorithm
 pgr = page_rank(g, algo='arpack')
 
 # to use in visualisation // rescaled for beautification
