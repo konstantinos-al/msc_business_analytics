@@ -167,3 +167,15 @@ evolution of the top-10 authors with regard to:
 • PageRank
 Again, provide short comments on your findings. Do you notice variations on
 the top-10 lists for the different years?
+
+dgr16 <- degree(g16)
+dgr17 <- degree(g17)
+dgr18 <- degree(g18)
+dgr19 <- degree(g19)
+dgr20 <- degree(g20)
+
+dgr16_top10 <- head(sort(dgr16, decreasing = TRUE),10)
+dgr17_top10 <- head(sort(dgr17, decreasing = TRUE),10)
+dgr18_top10 <- head(sort(dgr18, decreasing = TRUE),10)
+dgr19_top10 <- head(sort(dgr19, decreasing = TRUE),10)
+dgr20_top10 <- head(sort(dgr20, decreasing = TRUE),10)
