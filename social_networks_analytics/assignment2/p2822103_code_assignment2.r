@@ -1,4 +1,4 @@
-# --- PACKAGES ---
+#--- PACKAGES ---
 
 library('igraph')
 library('data.table')
@@ -88,3 +88,82 @@ for (y in yrs_to_filter) {
     path <- paste("authors_", y, ".csv", sep = "")
     write.csv(final_df3, path, row.names = FALSE)
 }
+
+#--- 2 Average degree over time ---
+#Your next task is to create plots that visualize the 5-year evolution of different
+#metrics for the graph. More specifically, you will create plots for:
+
+• Number of vertices
+• Number of edges
+• Diameter of the graph
+• Average degree (simple, not weighted)
+
+csv16 <- read.csv('assignment2/csv/authors_2016.csv')
+csv17 <- read.csv('assignment2/csv/authors_2017.csv')
+csv18 <- read.csv('assignment2/csv/authors_2018.csv')
+csv19 <- read.csv('assignment2/csv/authors_2019.csv')
+csv20 <- read.csv('assignment2/csv/authors_2020.csv')
+
+# graphs creation
+library("igraph")
+g16 <- graph_from_data_frame(csv16, directed = FALSE)
+g17 <- graph_from_data_frame(csv17, directed = FALSE)
+g18 <- graph_from_data_frame(csv18, directed = FALSE)
+g19 <- graph_from_data_frame(csv19, directed = FALSE)
+g20 <- graph_from_data_frame(csv20, directed = FALSE)
+
+# number of vertices
+vrx_16 <- gorder(g16)
+vrx_17 <- gorder(g17)
+vrx_18 <- gorder(g18)
+vrx_19 <- gorder(g19)
+vrx_20 <- gorder(g20)
+
+# number of edges
+edg_16 <- gsize(g16)
+edg_17 <- gsize(g17)
+edg_18 <- gsize(g18)
+edg_19 <- gsize(g19)
+edg_20 <- gsize(g20)
+
+# diameters of the graphs
+diam16 <- diameter(g16, directed = FALSE)
+diam17 <- diameter(g17, directed = FALSE)
+diam18 <- diameter(g18, directed = FALSE)
+diam19 <- diameter(g19, directed = FALSE)
+diam20 <- diameter(g20, directed = FALSE)
+
+# average graphs degrees
+avg_dgr16 <- mean(degree(g16))
+avg_dgr17 <- mean(degree(g17))
+avg_dgr18 <- mean(degree(g18))
+avg_dgr19 <- mean(degree(g19))
+avg_dgr20 <- mean(degree(g20))
+
+viz_vertices <- cbind(vrx_16, vrx_17, vrx_18, vrx_19, vrx_20)
+colnames(viz_vertices) <- c(2016, 2017, 2018, 2019, 2020)
+viz_edges <- cbind(edg_16, edg_17, edg_18, edg_19, edg_20)
+colnames(viz_edges) <- c(2016, 2017, 2018, 2019, 2020)
+viz_diam <- cbind(diam16, diam17, diam18, diam19, diam20)
+colnames(viz_diam) <- c(2016, 2017, 2018, 2019, 2020)
+viz_degree <- cbind(avg_dgr16, avg_dgr17, avg_dgr18, avg_dgr19, avg_dgr20)
+colnames(viz_degree) <- c(2016, 2017, 2018, 2019, 2020)
+
+# visualizations
+par(mfrow=c(2,2))
+par(mar=c(2,2,2,2))
+barplot(viz_vertices, col = 'slateblue4', main = 'Vertices')
+barplot(viz_edges, col = 'violetred4', main = "Edges")
+barplot(viz_diam, col = 'springgreen4', main = "Diameters")
+barplot(viz_degree, col = 'steelblue4', main = "Avg Degree")
+
+#What do you notice for each of the 5 above metrics? Are there significant fluctuations during these five years?
+
+# 3 Important nodes
+
+Next, you will write to code to create and print data frames for the 5-year
+evolution of the top-10 authors with regard to:
+• Degree (simple, not weighted)
+• PageRank
+Again, provide short comments on your findings. Do you notice variations on
+the top-10 lists for the different years?
