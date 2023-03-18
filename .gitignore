@@ -127,3 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+analytics_practicum/spotify_predict_valence/spotify_dataset.csv
